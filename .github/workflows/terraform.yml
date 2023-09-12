@@ -22,9 +22,10 @@ jobs:
       with:
         inlineScript: |
           az storage container list --auth-mode login --account-name tftestchgp123
+    - name: Checkout
+      uses: actions/checkout@v4
     - name: Terraform
       run: |
         terraform init
         terraform plan
         terraform apply -auto-approve
-        
