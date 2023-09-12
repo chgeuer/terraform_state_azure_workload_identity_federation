@@ -28,7 +28,7 @@ jobs:
     #     inlineScript: |
     #       az storage container list --auth-mode login --account-name "${STATE_STORAGE_ACCOUNT}"
     - name: Redefine environment
-      run: echo "ARM_OIDC_REQUEST_URL={ACTIONS_ID_TOKEN_REQUEST_URL}&audience=api%3A%2F%2FAzureADTokenExchange" >> $GITHUB_ENV
+      run: echo "ARM_OIDC_REQUEST_URL=${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=api%3A%2F%2FAzureADTokenExchange" >> $GITHUB_ENV
     - name: Diagnostics
       run: |
         echo "ARM_OIDC_REQUEST_URL: ${ARM_OIDC_REQUEST_URL}"
