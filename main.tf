@@ -8,16 +8,7 @@ terraform {
       version = "=2.23.0"
     }
   }
-}
 
-provider "azuread" {
-  use_oidc = true
-  tenant_id = "5f9e748d-300b-48f1-85f5-3aa96d6260cb"
-  client_id = "fdf939e2-e28a-4c33-a761-efa219ce9cc0"
-  features {}
-}
-
-terraform {
   backend "azurerm" {
     use_oidc             = true
     tenant_id            = "5f9e748d-300b-48f1-85f5-3aa96d6260cb"
@@ -28,4 +19,25 @@ terraform {
     container_name       = "tfstate"
     key                  = "prod.terraform.tfstate"
   }
+}
+
+provider "azuread" {
+  use_oidc = true
+  tenant_id = "5f9e748d-300b-48f1-85f5-3aa96d6260cb"
+  client_id = "fdf939e2-e28a-4c33-a761-efa219ce9cc0"
+  features {}
+}
+
+provider "azurerm" {
+  tenant_id         = "5f9e748d-300b-48f1-85f5-3aa96d6260cb"
+  client_id         = "fdf939e2-e28a-4c33-a761-efa219ce9cc0"
+  subscription_id   = "706df49f-998b-40ec-aed3-7f0ce9c67759"
+  features {}
+}
+
+# https://learn.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage?tabs=azure-cli
+
+resource "azurerm_resource_group" "state-demo-secure" {
+  name     = "state-demo"
+  location = "westeurope"
 }
