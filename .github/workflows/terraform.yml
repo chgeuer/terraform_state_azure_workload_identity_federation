@@ -1,4 +1,4 @@
-name: demo using variables
+name: WorkloadIdentityDemo
 
 on: [workflow_dispatch]
 
@@ -7,13 +7,18 @@ permissions:
   contents: read
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-        - uses: Azure/login@v1
-          with:
-            environment: azurecloud
-            allow-no-subscriptions: true
-            tenant-id: geuer-pollmann.de
-            client-id: fdf939e2-e28a-4c33-a761-efa219ce9cc0
-            audience: api://AzureADTokenExchange
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: Azure/login@v1
+      with:
+        environment: azurecloud
+        allow-no-subscriptions: true
+        tenant-id: geuer-pollmann.de
+        client-id: fdf939e2-e28a-4c33-a761-efa219ce9cc0
+        audience: api://AzureADTokenExchange
+    - name: Try listing containers using the CLI
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az storage container list --auth-mode login --account-name tftestchgp123
