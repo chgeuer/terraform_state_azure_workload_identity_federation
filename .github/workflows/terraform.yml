@@ -6,6 +6,11 @@ permissions:
   id-token: write
   contents: read
 
+env:
+  STATE_STORAGE_ACCOUNT: tfstate
+  ARM_TENANT_ID: geuer-pollmann.de
+  ARM_CLIENT_ID: fdf939e2-e28a-4c33-a761-efa219ce9cc0
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,14 +19,14 @@ jobs:
       with:
         environment: azurecloud
         allow-no-subscriptions: true
-        tenant-id: geuer-pollmann.de
-        client-id: fdf939e2-e28a-4c33-a761-efa219ce9cc0
+        tenant-id: env.ARM_TENANT_ID
+        client-id: env.ARM_CLIENT_ID
         audience: api://AzureADTokenExchange
     - name: Try listing containers using the CLI
       uses: azure/CLI@v1
       with:
         inlineScript: |
-          az storage container list --auth-mode login --account-name tftestchgp123
+          az storage container list --auth-mode login --account-name "${STATE_STORAGE_ACCOUNT}"
     - name: Checkout
       uses: actions/checkout@v4
     - name: Terraform
