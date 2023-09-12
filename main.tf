@@ -2,6 +2,7 @@
 # https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/guides/service_principal_oidc
 # https://learn.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage?tabs=azure-cli
 
+
 terraform {
   required_providers {
     azuread = {
@@ -12,6 +13,7 @@ terraform {
 
   backend "azurerm" {
     use_oidc             = true
+    # oidc_request_url     = "${{env.ACTIONS_ID_TOKEN_REQUEST_URL}}&audience=api%3A%2F%2FAzureADTokenExchange"
     tenant_id            = "5f9e748d-300b-48f1-85f5-3aa96d6260cb"
     client_id            = "fdf939e2-e28a-4c33-a761-efa219ce9cc0"
     subscription_id      = "706df49f-998b-40ec-aed3-7f0ce9c67759"
