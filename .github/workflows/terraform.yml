@@ -15,18 +15,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: Azure/login@v1
-      with:
-        environment: azurecloud
-        allow-no-subscriptions: true
-        tenant-id: ${{env.ARM_TENANT_ID}}
-        client-id: ${{env.ARM_CLIENT_ID}}
-        audience: api://AzureADTokenExchange
-    - name: Try listing containers using the CLI
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-          az storage container list --auth-mode login --account-name "${STATE_STORAGE_ACCOUNT}"
+    # - uses: Azure/login@v1
+    #   with:
+    #     environment: azurecloud
+    #     allow-no-subscriptions: true
+    #     tenant-id: ${{env.ARM_TENANT_ID}}
+    #     client-id: ${{env.ARM_CLIENT_ID}}
+    #     audience: api://AzureADTokenExchange
+    # - name: Try listing containers using the CLI
+    #   uses: azure/CLI@v1
+    #   with:
+    #     inlineScript: |
+    #       az storage container list --auth-mode login --account-name "${STATE_STORAGE_ACCOUNT}"
+    - name: Diagnostics
+      run: |
+        echo "ACTIONS_ID_TOKEN_REQUEST_URL: ${ACTIONS_ID_TOKEN_REQUEST_URL}"
+        echo "ACTIONS_ID_TOKEN_REQUEST_URL: ${ACTIONS_ID_TOKEN_REQUEST_URL}" | base64        
+        echo "ARM_CLIENT_ID: ${{env.ARM_CLIENT_ID}} ${ARM_CLIENT_ID}"
+        echo "STATE_STORAGE_ACCOUNT: ${{env.STATE_STORAGE_ACCOUNT}}"
     - name: Checkout
       uses: actions/checkout@v4
     - name: Terraform
