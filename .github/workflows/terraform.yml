@@ -1,0 +1,19 @@
+name: demo using variables
+
+on: [workflow_dispatch]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: Azure/login@v1
+          with:
+            environment: azurecloud
+            allow-no-subscriptions: true
+            tenant-id: geuer-pollmann.de
+            client-id: fdf939e2-e28a-4c33-a761-efa219ce9cc0
+            audience: api://AzureADTokenExchange
